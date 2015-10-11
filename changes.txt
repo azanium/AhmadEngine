@@ -1,0 +1,232 @@
+
+			             AhmadENGINE
+
+		The name of Ahmad was taken from my father's name 'AHMAD'
+		Copyright (C) 2005-2006, Suhendra Ahmad
+		
+
+	        email   : ceo @ ainasoft.com (space not included)
+	        website : http://www.ainasoft.com
+
+		
+
+Started on October 20th 2005 in Bandung, Indonesia
+=========================================================================================
+
+* Version 0.2
+  I've done the feature for Per-Vertex Directional Lighting using vertex shader
+  v1.1 and pixel shader v1.1
+  < Thu, January 12th 2005 6:46 >
+
+* Version 0.2
+  I've fixed the bugs on the misunderstanding communication between the static
+  and dynamic vertex cache object.
+  < Mon, January 8th 2006 9:57 am >
+  
+* Version 0.2
+  The RenderD3D seems getting bigger and bigger. And now this time i've added
+  the Vertex Shader and Pixel Shader support. Pretty annoying in the process
+  of creation, because i've spent 3 days to create a dynamic vertex shader and
+  pixel shader buffers. See the new method on the "Vertex and Pixel Shader"
+  section on the nD3DDriver.h source file.
+  < Sat, January 7th 2006 7:30 pm >
+
+* Version 0.1
+  I've been working on the array class and the StaticBuffer class for two days.
+  The testing caused my computer hang and i had to reset it for 4 times.
+  But now i have it done and running well.
+  < Wed, December 27th 2005 10:01pm >
+
+* Version 0.1
+  I've removed the RenderTriangle() and change it with vertex cache object (Vertex Batching).
+  I've also added new types of vertex: SVertex3Tex, SVertexTangent.
+  I've also added the Skin Manager for the ease of using the Skin (materials, textures).
+  < Sun, December 25th 2005 10:27pm >
+
+* Version 0.1
+  I've fixed the bugs on the IMatrix::Normalize(). I forgot to add the sqrt() function
+  in the length calculation. This error caused the nD3DDriver::SetViewLookAt 
+  calculate the wrong value of normalization.
+  
+  I've added the Font management (see nD3DDriver::RegisterFont, DrawText()... for details)
+  I've also changed the ISurface color format into single color format ECF_A8R8G8B8,
+  the purpose is to provide the alpha value for a bitmap without alpha value, in this
+  case the bitmap's color format is ECF_R8G8B8.
+  You can see in the new screenshot "alpha_blending.jpg", the use of DrawText(), 
+  ISurface::SetTransparency() and ISurface::SetAlphaKey().
+  
+  < Thu, December 15th 2005 1:40am Sleep *_* >
+
+* Version 0.1
+  Now, AhmadENGINE support fog feature. Easy to use and easy to modify. You
+  can modify the fog settings in the SFog structure which you can get in
+  the RenderState.h
+  I have also added the FillMode(POINT,WIREFRAME,SOLID) and 
+  ShadeMode(FLAT,GOURAUD).
+  
+  < Wed, December 14th 2005 12:22am by Suhendra Ahmad *_* i'm going to bed now) >
+
+* Version 0.1
+  Bugs fixed on the nFileIO and nImageManager. It used to be critical section
+  error when we tried to open a non-existing texture file, caused by unpredicted
+  opened file. But, i had it fixed by adding extra code on the createFileIO().
+  I have added IRect in Core namespace also.
+  
+  < Updated on Mon, December 12th 2005 10:28pm by Suhendra Ahmad *_* hungry (dinner? i'm going now) :( >
+
+* Version 0.1 
+  Bugs fixed on the RenderDevice::SetWorldMatrix(), the bugs occur when we
+  try to change world matrix, and what happen? it change nothin'. The problem
+  is like this :
+  
+  void nD3DDriver::SetWorldMatrix( const Core::IMatrix *pMatrix )
+  {
+  	if (!pMatrix)
+	{
+		....
+	}
+	else
+		memcpy(&m_WorldMatrix, pMatrix, sizeof(pMatrix);
+	
+	....
+  }
+
+  This error caused our world matrix unchanged.   
+  Do you see the error? yes, i have mistaken the sizeof(...) in the memcpy(),
+  It should be sizeof(Core::IMatrix), so the revision is like this :
+
+ 		memcpy(&m_WorldMatrix, pMatrix, sizeof(Core::IMatrix));
+
+  Now, it looks better right?
+  
+  < Updated on Mon, December 12th 2005 8:43pm by Suhendra Ahmad *_* hungry (dinner? i'm going now) :( >
+
+
+* Still version 0.1
+  Fixing the bugs on the viewport switching. At first it won't work, but then
+  i realize that the code never been executed because of the if() condition
+  is irrational.
+  Adding the Draw2DImage() method in the RenderDevice, so if you want to draw a 2D
+  image in 2D screen coordinate system you won't need to type complex code by 
+  providing vertex and uv coordinate for the texture, but all u gotta do is like this:
+  
+  ISurface *surface = p_ImageManager->GetImageManager("../data/texture.bmp");
+  
+  while (render)
+  {
+  	....
+  	p_Device->Draw2DImage( surface, IRectf(0, 0, 200, 200));
+  	....
+  }
+  
+  That was very easy isn't it?
+  
+  What's the cool thing about AhmadENGINE? well, as for now, it support up to
+  4 stages of View Mode(whether PERSPECTIVE, ORTHOGONAL, or TWODIMENSION).
+  What for this different type of stages? Well, imagine if you want to create
+  a level designer program which have four view mode (left, right, up, and perspective)
+  (like 3dsmax, maya, XSI, etc) and the engine doesn't support those mode, well
+  i guess you can say it's a pain in the a**, One more thing, the engine support
+  up to 8 render target. You might ask, but we only need four different render target, 
+  what for the rest of it? Well, the answer is, the more is better than the less, right?
+  
+  < Updated on Mon, December 12th 2005 1:22am by Suhendra Ahmad *_* sleepy :( >
+
+* Masih versi 0.1
+  Saya selesai membuat ITexture yang secara otomatis membuat dan mengkopi surface dari
+  ISurface ke dalam memory texture Direct3D9.
+  Saya mengubah ImageLoaderBmp dari menggunakan LoadImage() (khusus untuk Windows) menjadi
+  platform independent code. Tetapi saya menemukan bugs pada ISurface, karena pada 
+  ImageLoaderBmp ketika temporary memory dimusnahkan, ternyata ISurface membuat memory
+  tetapi tidak menggunakannya, malah menunjuk pada memory temporary, sehingga menimbulkan
+  crash pada saat loading file BMP.
+  Kali ini saya memperbaiki bugs pada IFileIO::Read() yang memberikan efek apabila kita
+  run dari MSDEVENV, maka texture bisa load, tetapi apabila kita run dari Windows Explorer,
+  maka metoda IFileIO::Read() tidak akan pernah memanggil fungsi pembacaan, bugs ini 
+  diperbaiki dengan cara mengubah switch() menjadi if().
+
+  Versi 0.1 ini sudah dapat mendukung texturing dengan beberapa perbaikan bugs disana sini.
+  <Mon, December 5th 2005 9:13pm>
+
+* Stick with me ok,...
+  Just another version 0.1, i didn't do much work except messing around with the 
+  bloody code. I'm stuck with ImageManager architecture whether i put it on
+  the IRenderDevice subsystem, or i put it on the IAhmadENGINE. After i've got
+  some problems on accessing the IFileIO (which is in the Core Engine) when i put it 
+  on the IRenderDevice, i change my mind to move the ImageManager subsystem into
+  the IAhmadENGINE(core Engine), and you know? it works. So, now you can't access
+  the ImageManager on IRenderDevice, but on the IAhmadENGINE instead.
+
+  <Mon, Dec 5th 2005 1:04am> 
+  Why i always sleep late? am i got insomnia? man, i gotta sleep right away.... *_*
+
+* Version 0.1 Features <Sun, December 4th 2005 1:12am>:
+  There are 5 namespaces: Ahmad, Ahmad::IO, Ahmad::Platform, Ahmad::Video, Ahmad::Core
+  
+  *** namespace Ahmad consists of :
+    
+      + namespace Ahmad::Core;
+        - class IDimension<T> 
+        - class IMatrix
+        - class IPosition<T>
+        - class IVector (reserved class, seldom to use)
+        - class IVector3D<T> : type definition = IVector3f, IVector3i
+        - class IVector2D<T> : type definition = IVector2f, IVector3i
+      
+      + namespace Ahmad::IO;
+        - Interface and class implement of nFileIO(IFileIO)
+        - Interface and class implement of nFileSystem(IFileSystem)
+      
+      + namespace Ahmad::Video;
+        On the Engine.dll
+        ===============================
+        - Interface and class implement of nSurface(ISurface)
+        - Interface IImageLoader
+        - class implement of nImageLoaderBmp(IImageLoader)
+        - Interface and class implement of nImageManager(IImageManager)
+        
+        On the RenderD3D.dll
+        ==========================
+        - Class IColor and IColorf
+        - Interface IRenderDevice
+        - Interface and class implement nRenderMan(IRenderMan)
+        - Class implement of nD3DDrive(IRenderDevice)
+        - Vertex structure SVertex, SVertexPos, SVertexNormal, SVertexLit, SVertex2Tex
+      
+      + namespace Ahmad::Platform;
+        - Non-subsytem of IAhmadENGINE: Platform spesific class IForms
+              
+      + Interface IAhmadENGINE
+        => This is the framework master which contains all of the subsystems
+      
+      + class IBuyut (in Sundanese the meaning is Great Ancestor)
+        => This is the ancestor of all the subsystems on the AhmadENGINE 
+           (including the framework master)
+      
+      + class implement nAhmadENGINE(IAhmadENGINE)
+        => The implementation of the framework master interface
+      
+  TODO:
+  ==============
+  	1. Create matrix manager to handle the 3D projection (perspective, orthogonal)
+  	   and 2D rendering states.
+  	2. Create the Texture Manager.
+  	2. Create the Skin Manager.
+  
+  
+* The RenderMan now has ability to render Triangle and Line <Sat, Dec 3rd 2005 4:07am>.
+  First time rendering the triangle after all this whole one month, i feel
+  very excited. Pretty much good for a game engine programmer beginner like me.
+  I saw Bunny Engine on GameDevId.org last week, and my impression is that the 
+  Bunny Engine is not much of a game engine, why? because it only can render 2 dimension
+  surface and using SDL (It is a very lame game engine if you use someone else engine
+  like SDL, so i can say that Bunny Engine is not an engine exactly). I know that 
+  the engine demo looks very well, but for today technology, it is outdated. 
+  But, hey who am i to say that? Anyway, I do appreciate IPHAT for creating 
+  such an engine like Bunny Engine.
+
+  The basic concepts of AhmadENGINE is that we made everything and we must support everything,
+  and the Engine must override all the platform limitation. Simple to use, and learnable
+  by the newbies. And the most of all, it's open to the community especially the Ainasoft crew.
+  
+* Architecture was created on October 2005

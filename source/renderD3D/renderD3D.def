@@ -1,0 +1,4 @@
+LIBRARY	"renderD3D.dll"
+EXPORTS
+	CreateRenderDevice
+	ReleaseRenderDevice

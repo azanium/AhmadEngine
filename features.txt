@@ -1,0 +1,58 @@
+
+			      	     AhmadENGINE
+
+		The name of Ahmad was taken from my father's name 'AHMAD'
+		Copyright (C) 2005-2006, Suhendra Ahmad
+		
+
+	        email   : ceo @ ainasoft.com (space not included)
+	        website : http://www.ainasoft.com
+
+		
+
+Started on October 20th 2005 in Bandung, Indonesia
+=========================================================================================
+
+Version 0.2
+================
+- Support for Per-Vertex Directional Lighting
+
+Version 0.2
+================
+- Support for Vertex Shader and Pixel Shader
+
+Version 0.1
+================
+
+- Dynamic Vertex Cache (Render Manager)
+- Static Vertex Cache (Render Manager)
+- Skin Manager
+- Font Management
+- Alpha Blending for ISurface
+- Fog (Linear, EXP, EXP2)
+- 2D projection
+- 4 stages Viewport
+- 4 stages Orthogonal Projection
+- 4 stages Perspective Projection (left handed)
+- 8 multiple simultaneous rendertarget
+- Independent Texture object
+  	*** Bilinear Texture Filtering
+  	*** Trilinear Texture Filtering
+  	*** Anisotropic Texture Filtering
+  	
+- Independent Surface object for texture
+- Image Manager
+- File System Manager
+- Draw 2D Image by pixel and by 3D unit
+- Math :
+	*** Vector 4 (x, y, z, w)
+	*** Vector 3 (x, y, z)
+	*** Vector 2 (x, y)
+	*** Matrix (4x4) : Built in perspective/orthogonal projection.
+ 	*** Dimension 
+	*** Rectangle
+
+
+
+Copyright (C) 2005-2006, Suhendra Ahmad
+CEO of Ainasoft Technology
